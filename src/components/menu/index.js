@@ -23,6 +23,7 @@ import {useSelector, useDispatch} from 'react-redux';
 import { toggleHistory } from "./history-menu.slice";
 
 import useStyles from './menu.styles';
+import { BrowserRouter as Link } from 'react-router-dom';
 
 const PrimaryMenuAppBar = (props) => {
   const classes = useStyles();
@@ -86,6 +87,7 @@ const PrimaryMenuAppBar = (props) => {
       open={isMenuOpen}
       onClose={handleMenuClose}
     >
+      <MenuItem onClick={handleMenuClose}><Link to="/signin">Login</Link></MenuItem>
       <MenuItem onClick={handleMenuClose}>Profile</MenuItem>
       <MenuItem onClick={handleMenuClose}>Manage</MenuItem>
     </Menu>

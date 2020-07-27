@@ -138,7 +138,7 @@ const SearchForm = () =>  {
           getOptionSelected={(option, value) => option.name === value.name}
           getOptionLabel={(option) => option.name}
           // filterOptions={filterOptions}
-          options={loading ? [] : data.allDApps  }
+          options={loading ? [] : data ? data.allDApps : []   }
           loading={loading}
           renderInput={(params) => (
             <TextField
