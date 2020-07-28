@@ -5,7 +5,7 @@ import PrimaryMenuAppBar  from '.';
 import store from '../../reducers';
 import { Provider } from 'react-redux'; 
 
-import { ApolloProvider } from '@apollo/react-hooks';
+import { ApolloProvider } from '@apollo/client';
 import client from '../../graphql'
 
 test('renders learn react link', () => {

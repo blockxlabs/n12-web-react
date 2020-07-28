@@ -1,5 +1,4 @@
-import { InMemoryCache } from 'apollo-cache-inmemory';
-import ApolloClient from 'apollo-boost';
+import { ApolloClient, InMemoryCache } from '@apollo/client';
 import { resolvers, typeDefs } from './resolvers';
 import initialState from './initialState';
 import fetch from 'unfetch'
@@ -7,16 +6,16 @@ import fetch from 'unfetch'
 const cache = new InMemoryCache()
 
 const client = new ApolloClient({
-  fetch,
+  // fetch,
   uri: 'http://localhost:4000/graphql',
-  cache,
-  typeDefs,
-  resolvers,
+  cache
+  // typeDefs,
+  // resolvers,
 });
 
-cache.writeData({
-  data: initialState,
-});
+// cache.writeData({
+//   data: initialState,
+// });
 
 
 export default client

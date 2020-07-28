@@ -7,7 +7,7 @@ import CircularProgress from '@material-ui/core/CircularProgress';
 
 import Autocomplete from '@material-ui/lab/Autocomplete';
 
-import { Query } from '@apollo/react-components';
+// import { Query } from '@apollo/react-components';
 
 // import SearchIcon from '@material-ui/icons/Search';
 
@@ -22,7 +22,7 @@ import { addSearchInput } from "./search-form.slice";
 // import custom state hooks
 import useStyles from './search-form.styles';
 
-import { useQuery } from '@apollo/react-hooks';
+import { useQuery } from '@apollo/client';
 import { SEARCH_LIKE_DAPPS_INFO, ALL_DAPPS } from '../../../graphql/queries/getDappsQueries';
 
 // uncomment for apollo client
@@ -118,7 +118,7 @@ const SearchForm = () =>  {
       {(addSearchInput, { data }) => ( */}
 
     {/* uncomment for apollo client */}
-    <Query query={ALL_DAPPS}>
+    {/* <Query query={ALL_DAPPS}>
       {({ loading, error, data }) => 
         <Autocomplete
           id="asynchronous-demo"
@@ -166,7 +166,7 @@ const SearchForm = () =>  {
           )}
         />
       }
-    </Query>
+    </Query> */}
     </div>
     <MemoizedMessage/>
   </Fragment>
