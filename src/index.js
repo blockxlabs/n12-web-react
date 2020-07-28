@@ -8,7 +8,7 @@ import store from './reducers/';
 import { Provider } from 'react-redux'; 
 
 // uncomment for apollo client
-import { ApolloProvider } from '@apollo/react-hooks';
+import { ApolloProvider } from '@apollo/client';
 import client from './graphql/'
 
 import * as serviceWorker from './serviceWorker';

@@ -20,10 +20,7 @@ import ChevronRightIcon from '@material-ui/icons/ChevronRight';
 import SearchForm from '../../domain/search/search-form';
 import PrimaryMenuAppBar from '../menu';
 import ResultsGridList from '../result-tiles';
-
-//  uncomment for Context
-// import HistoryToggleProvider, {HistoryToggleContext} from '../../context/history-toggle-context';
-// import SearchInputProvider, {SearchInputContext} from '../../context/search-input-context';
+import Dapps from '../../domain/dapps/list-dapps';
 
 import useStyles from './App.styles';
 import { useTheme } from '@material-ui/core/styles';
@@ -32,30 +29,15 @@ import { BrowserRouter as Router, Link, Route } from 'react-router-dom';
 // uncomment for redux
 import { useSelector } from "react-redux";
 
-import { SEARCH_INPUT_QUERY } from '../../graphql/queries/submitSearchInputQueries';
-import { GET_DAPPS_INFO, SEARCH_DAPPS_INFO } from '../../graphql/queries/getDappsQueries';
-
-import { useQuery } from '@apollo/react-hooks';
-
 export default function PrimarySearchAppBar() {
   const classes = useStyles();
   const theme = useTheme();
   // uncomment for redux
-  const {searchInputSubmit} = useSelector(state => state.searchForm);
-
-  // uncomment for apollo client
-  // const { data } = useQuery(SEARCH_INPUT_QUERY);
-  // console.log("data", data)
-  // const { data: dappsInfo, error: errorDappsInfo, loading: loadingDappsInfo } = useQuery(GET_DAPPS_INFO);
-  // console.log("dappsInfo", dappsInfo)
-  // const { data: sDappsInfo, error: errorSDappsInfo, loading: loadingSDappsInfo } = useQuery(SEARCH_DAPPS_INFO, {
-  //   variables: { q: "a" },
-  // });
-  // console.log("sDappsInfo", sDappsInfo)
+  const { searchInputSubmit } = useSelector(state => state.searchForm);
 
   const [open, setOpen] = React.useState(false);
 
-  
+
   const handleDrawerOpen = () => {
     setOpen(true);
   };
@@ -66,108 +48,63 @@ export default function PrimarySearchAppBar() {
 
   return (
     <Router>
-    {/* <HistoryToggleProvider> */}
-    {/* <SearchInputProvider> */}
-    <div className={classes.grow}>
       <div className={classes.grow}>
-        <AppBar position="static">
-          <Toolbar>
-            <IconButton
-              edge="start"
-              className={classes.menuButton}
-              color="inherit"
-              onClick={handleDrawerOpen}
-              aria-label="open drawer"
-            >
-              <MenuIcon />
-            </IconButton>
+        <div className={classes.grow}>
+          <AppBar position="static">
+            <Toolbar>
+              <IconButton
+                edge="start"
+                className={classes.menuButton}
+                color="inherit"
+                onClick={handleDrawerOpen}
+                aria-label="open drawer"
+              >
+                <MenuIcon />
+              </IconButton>
               <Typography className={classes.title} variant="h6" noWrap >
                 <Link to="/" style={{ color: 'inherit', textDecoration: 'inherit' }} >
                   N12
                 </Link>
               </Typography>
 
-                <SearchForm/>
-            <div className={classes.grow} />
-            <PrimaryMenuAppBar />
-          </Toolbar>
-        </AppBar>
-        <Drawer
-          className={classes.drawer}
-          variant="persistent"
-          anchor="left"
-          open={open}
-          classes={{
-            paper: classes.drawerPaper,
-          }}
-        >
-          <div className={classes.drawerHeader}>
-            <IconButton onClick={handleDrawerClose}>
-              {theme.direction === 'ltr' ? <ChevronLeftIcon /> : <ChevronRightIcon />}
-            </IconButton>
-          </div>
-          <Divider />
+              <SearchForm />
+              <div className={classes.grow} />
+              <PrimaryMenuAppBar />
+            </Toolbar>
+          </AppBar>
+          <Drawer
+            className={classes.drawer}
+            variant="persistent"
+            anchor="left"
+            open={open}
+            classes={{
+              paper: classes.drawerPaper,
+            }}
+          >
+            <div className={classes.drawerHeader}>
+              <IconButton onClick={handleDrawerClose}>
+                {theme.direction === 'ltr' ? <ChevronLeftIcon /> : <ChevronRightIcon />}
+              </IconButton>
+            </div>
+            <Divider />
             <List>
-              <ListItem button component={Link} to={'/reports'}  onClick={handleDrawerClose}>
+              <ListItem button component={Link} to={'/reports'} onClick={handleDrawerClose}>
                 <ListItemIcon><AssessmentIcon /></ListItemIcon>
                 <ListItemText primary={'Reports'} />
               </ListItem>
             </List>
-          {/* </Router> */}
+            <Divider />
+          </Drawer>
+        </div>
+        <Container maxWidth="md">
+          <Route path="/reports" render={() => {
+            return (<div>REPORT</div>)
+          }} />
+          <Route path='/dapps' component={Dapps}></Route>
 
-          <Divider />
-          {/* <List>
-            {['All mail', 'Trash', 'Spam'].map((text, index) => (
-              <ListItem button key={text}>
-                <ListItemIcon>{index % 2 === 0 ? <InboxIcon /> : <MailIcon />}</ListItemIcon>
-                <ListItemText primary={text} />
-              </ListItem>
-            ))}
-          </List> */}
-        </Drawer>
+        </Container>
+
       </div>
-      {/* <Router> */}
-      <Container maxWidth="md">
-        <Route exact={true} path={["/", "/search"]} render={() => {
-          return(
-            <Fragment>
-              {/* <HistoryToggleContext.Consumer>
-                {(historyContext) => {
-                  console.log("APP", historyContext);
-                  return (
-                  <div>Is history on? {historyContext.historyToggle.toString()} </div>
-                  )
-                }}
-              </HistoryToggleContext.Consumer> */}
-              {/* <div>Is history on? {historyContext.historyToggle.toString()} </div> */}
-              {
-                <div>
-                  
-                  {/* uncomment for redux */}
-                  {searchInputSubmit.map((entry, index) =>
-                    <div key={index}>{entry}</div>
-                  )}
-
-                  {/* uncomment for apollo client  */}
-                  {/* {data.searchInputs.map(searchInput => <div>{searchInput.searchText}</div>)} */}
-                  {/* {loadingDappsInfo ? <div> Loading </div> : dappsInfo.dapps.map(dapp => <div>{dapp.name} {dapp.description}</div>)} */}
-  
-                </div>
-              }
-
-              {/* <ResultsGridList/> */}
-            </Fragment>
-          )
-        }}/>
-
-        <Route path="/reports" render={()=>{
-          return(<div>REPORT</div>)
-        }}/>
-      </Container>
-
-    </div>
-    {/* </SearchInputProvider> */}
-    {/* </HistoryToggleProvider> */}
     </Router>
 
   );

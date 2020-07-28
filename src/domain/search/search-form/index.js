@@ -7,14 +7,6 @@ import CircularProgress from '@material-ui/core/CircularProgress';
 
 import Autocomplete from '@material-ui/lab/Autocomplete';
 
-import { Query } from '@apollo/react-components';
-
-// import SearchIcon from '@material-ui/icons/Search';
-
-// uncomment for context
-// import {SearchInputContext} from '../../../context/search-input-context';
-// import {HistoryToggleContext} from '../../../context/history-toggle-context';
-
 // uncomment for Redux
 import { useSelector, useDispatch } from "react-redux";
 import { addSearchInput } from "./search-form.slice";
@@ -22,7 +14,7 @@ import { addSearchInput } from "./search-form.slice";
 // import custom state hooks
 import useStyles from './search-form.styles';
 
-import { useQuery } from '@apollo/react-hooks';
+import { useQuery } from '@apollo/client';
 import { SEARCH_LIKE_DAPPS_INFO, ALL_DAPPS } from '../../../graphql/queries/getDappsQueries';
 
 // uncomment for apollo client
@@ -109,64 +101,6 @@ const SearchForm = () =>  {
   return (
   <Fragment>
     <div className={classes.search}>
-    {/* <div className={classes.searchIcon}>
-      <SearchIcon />
-    </div> */}
-    
-    {/* uncomment for apollo client
-      <Mutation mutation={ADD_SEARCH_INPUT_MUTATION}>
-      {(addSearchInput, { data }) => ( */}
-
-    {/* uncomment for apollo client */}
-    <Query query={ALL_DAPPS}>
-      {({ loading, error, data }) => 
-        <Autocomplete
-          id="asynchronous-demo"
-          classes={{
-            root: classes.inputRoot,
-            input: classes.inputInput,
-          }}
-          variant="filled"
-          size="small"
-          open={open}
-          onOpen={() => {
-            setOpen(true);
-          }}
-          onClose={() => {
-            setOpen(false);
-          }}
-          getOptionSelected={(option, value) => option.name === value.name}
-          getOptionLabel={(option) => option.name}
-          // filterOptions={filterOptions}
-          options={loading ? [] : data.allDApps  }
-          loading={loading}
-          renderInput={(params) => (
-            <TextField
-              {...params}
-              label="Search"
-              variant="filled"
-              size="small"
-              onKeyPress={e=>{
-                // uncomment for apollo store management
-                // handleSearchOnChange(e, addSearchInput);
-
-                // uncomment for redux
-                handleSearchOnChange(e);
-              }}
-              InputProps={{
-                ...params.InputProps,
-                endAdornment: (
-                  <React.Fragment>
-                    {loading ? <CircularProgress color="inherit" size={20} /> : null}
-                    {params.InputProps.endAdornment}
-                  </React.Fragment>
-                ),
-              }}
-            />
-          )}
-        />
-      }
-    </Query>
     </div>
     <MemoizedMessage/>
   </Fragment>
