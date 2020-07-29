@@ -3,6 +3,7 @@ import gql from 'graphql-tag';
 export const ALL_DAPPS = gql` 
 query allDApps {
   allDApps{
+    uuid
 		name
 	  description
     logoUrl
