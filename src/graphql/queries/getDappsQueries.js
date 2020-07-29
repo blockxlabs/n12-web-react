@@ -30,3 +30,19 @@ query searchDApps($searchLike:  String!) {
 }
 `;
 
+export const SELECTED_DAPP = gql`
+query selectedDapp($dAppUuid: String!) {
+  dApps(uuid: $dAppUuid){
+    name,
+    description,
+    logoUrl,  
+    Notifications{
+      uuid,
+      dAppUuid,
+      name,
+      shortDescription,
+      longDescription
+    }  
+  }
+}
+`;

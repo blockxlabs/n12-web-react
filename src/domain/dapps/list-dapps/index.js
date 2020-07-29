@@ -19,7 +19,7 @@ function Dapps() {
   const { loading, error, data } = useQuery(ALL_DAPPS);
 
   const viewDetail = (dapp) => {
-    history.push("/dapp/" + dapp.uuid);
+    history.push("/selectNotifications/" + dapp.uuid);
   };
 
   const renderEachDapp = (dapp) => {

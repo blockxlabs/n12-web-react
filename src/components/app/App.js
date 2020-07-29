@@ -29,6 +29,12 @@ import { BrowserRouter as Router, Link, Route } from 'react-router-dom';
 // uncomment for redux
 import { useSelector } from "react-redux";
 
+
+import { SEARCH_INPUT_QUERY } from '../../graphql/queries/submitSearchInputQueries';
+import { GET_DAPPS_INFO, SEARCH_DAPPS_INFO } from '../../graphql/queries/getDappsQueries';
+
+import SelectNotifications from '../../domain/notification/select-notifications'
+
 export default function PrimarySearchAppBar() {
   const classes = useStyles();
   const theme = useTheme();
@@ -101,11 +107,14 @@ export default function PrimarySearchAppBar() {
             return (<div>REPORT</div>)
           }} />
           <Route path='/dapps' component={Dapps}></Route>
-
+          <Route path="/selectNotifications/:dAppUuid" render={() => {
+            return (<div><SelectNotifications /></div>)
+          }} />
         </Container>
 
-      </div>
+    </div>
+    {/* </SearchInputProvider> */}
+    {/* </HistoryToggleProvider> */}
     </Router>
-
   );
 }
