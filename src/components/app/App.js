@@ -10,6 +10,7 @@ import { BrowserRouter as Router, Link, Route, Switch } from 'react-router-dom';
 import SelectNotifications from '../../domain/notification/select-notifications'
 import Confirm from '../../domain/notification/confirm';
 import Email from '../../domain/notification/email';
+import ManageNotifications from '../../domain/notification/manage-notifications'
 
 export default function PrimarySearchAppBar() {
   const classes = useStyles();
@@ -41,6 +42,7 @@ export default function PrimarySearchAppBar() {
             }} />
             <Route path="/email" component={Email} ></Route>
             <Route path="/confirm" component={Confirm}></Route>
+            <Route path="/manage-subscription/:userUuid/:dAppUuid" component={ManageNotifications}></Route>
              
             {/* Keep it last  */}
             <Route path="/" component={Dapps}></Route>
