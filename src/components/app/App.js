@@ -11,6 +11,7 @@ import SelectNotifications from '../../domain/notification/select-notifications'
 import Confirm from '../../domain/notification/confirm';
 import Email from '../../domain/notification/email';
 import ManageNotifications from '../../domain/notification/manage-notifications'
+import Snackbar from "../snackbar";
 
 export default function PrimarySearchAppBar() {
   const classes = useStyles();
@@ -49,10 +50,11 @@ export default function PrimarySearchAppBar() {
             
           </Switch>
         </Container>
-
+       
     </div>
     {/* </SearchInputProvider> */}
     {/* </HistoryToggleProvider> */}
+    <Snackbar />
     </Router>
   );
 }

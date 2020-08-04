@@ -3,29 +3,35 @@ import { Typography,  Avatar, Button, Grid, ExpansionPanel, ExpansionPanelSummar
 import ExpandMoreIcon from '@material-ui/icons/ExpandMore';
 import LabeledSwitch from '../../../components/labeled-switch';
 import useStyles from './confirm.styles';
-import { useSelector } from "react-redux";
+import { useSelector, useDispatch } from "react-redux";
 import { Notification } from "../notification.slice";
 import { useHistory } from "react-router-dom";
 import { useQuery ,useMutation } from '@apollo/client';
 import { SELECTED_DAPP } from '../../../graphql/queries/getDappsQueries';
 import {  SUBSCRIBE_NOTIFICATIONS } from '../../../graphql/mutations/subscribeNotificationsMutation';
+import { openSnackbar } from '../../../components/snackbar/snackbar.slice';
 
 export default function Confirm() {
     const classes = useStyles();
     const { selectedDapp, selectedNotifications,email } = useSelector(Notification);
     
     let history = useHistory();
+    const dispatch = useDispatch();
     const dAppUuid = selectedDapp;
     const { error, data } = useQuery(SELECTED_DAPP,{
     variables: { dAppUuid },
     });
     const  subscribeNotificationsMutation = useMutation(SUBSCRIBE_NOTIFICATIONS); 
 
-    const handleSubmit = () => {
+  const handleSubmit = () => {
+    try {
         const [subscribeNotificcations, { data }] = subscribeNotificationsMutation;
         subscribeNotificcations({ variables: { email, dAppUuid,selectedNotifications } });
-        console.log(data);
+        dispatch(openSnackbar({message:  "Succeeded.Check your Inbox for more details.",type:"success"}))
         history.push("/");
+    } catch (err) {
+      dispatch(openSnackbar({ message: "Failed.Please try again.", type: "error" }));       
+      }       
     }
     
     const isSelected = (notification) => {
