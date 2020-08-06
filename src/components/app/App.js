@@ -10,7 +10,9 @@ import { BrowserRouter as Router, Link, Route, Switch } from 'react-router-dom';
 import SelectNotifications from '../../domain/notification/select-notifications'
 import Confirm from '../../domain/notification/confirm';
 import Email from '../../domain/notification/email';
-import ManageNotifications from '../../domain/notification/manage-notifications'
+// import ManageNotifications from '../../domain/notification/manage-notifications';
+import ManageSubscriptions from '../../domain/notification/manage-subscriptions';
+
 import Snackbar from "../snackbar";
 
 export default function PrimarySearchAppBar() {
@@ -43,7 +45,7 @@ export default function PrimarySearchAppBar() {
             }} />
             <Route path="/email" component={Email} ></Route>
             <Route path="/confirm" component={Confirm}></Route>
-            <Route path="/manage-subscription/:userUuid" component={ManageNotifications}></Route>
+            <Route path="/manage-subscription/:userUuid" component={ManageSubscriptions}></Route>
              
             {/* Keep it last  */}
             <Route path="/" component={Dapps}></Route>

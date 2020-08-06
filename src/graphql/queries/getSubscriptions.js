@@ -7,11 +7,13 @@ export const GET_SUBSCRIPTIONS = gql`
       dAppUuid,
       userUuid,
       Notification{
+        uuid
         name
         shortDescription
         longDescription
       },
       DApp{
+        uuid
         name
         logoUrl
       },
