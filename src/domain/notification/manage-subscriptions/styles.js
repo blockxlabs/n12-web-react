@@ -6,6 +6,16 @@ const useStyles = makeStyles((theme) => ({
     height: theme.spacing(7),
     marginTop: 100,
   },
+
+  headerWraper: {
+    marginTop: 100
+  },
+
+  loadingWrapper: {
+    display: 'flex',
+    justifyContent: 'center',
+    marginTop: 100
+  }
 }));
 
 export default useStyles;

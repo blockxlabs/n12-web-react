@@ -2,7 +2,7 @@ import React from 'react';
 import Typography from '@material-ui/core/Typography';
 import useStyles from './styles';
 
-function Loading({ message }) {
+function ErrorMessage({ message }) {
   const classes = useStyles();
 
   return (
@@ -13,4 +13,4 @@ function Loading({ message }) {
   )
 }
 
-export default Loading;
+export default ErrorMessage;

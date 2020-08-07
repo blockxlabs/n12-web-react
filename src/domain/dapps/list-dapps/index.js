@@ -10,7 +10,7 @@ import CircularProgress from '@material-ui/core/CircularProgress';
 import Grid from '@material-ui/core/Grid';
 import useStyles from './styles';
 import { ALL_DAPPS } from '../../../graphql/queries/getDappsQueries'
-import Loading from '../../../components/loading';
+import ErrorMessage from '../../../components/error-message';
 
 function Dapps() {
 
@@ -50,7 +50,7 @@ function Dapps() {
   if (error) {
     const message = error.message;
     return (
-      <Loading message={message} />
+      <ErrorMessage message={message} />
     );
   }
 

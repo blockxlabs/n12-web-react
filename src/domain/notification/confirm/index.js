@@ -21,26 +21,26 @@ export default function Confirm() {
   const { error, data } = useQuery(SELECTED_DAPP,{
     variables: { dAppUuid },
   });
-  const  subscribeNotificationsMutation = useMutation(SUBSCRIBE_NOTIFICATIONS); 
+    const subscribeNotificationsMutation = useMutation(SUBSCRIBE_NOTIFICATIONS, {
+      onCompleted() {
+        dispatch(updateEmail(""));
+        dispatch(updateSelectedNotifications([]));
+        dispatch(openSnackbar({ message: "Succeeded. Check your Inbox for more details.", type: "success" }));
+        history.push("/");
+      }
+    }); 
   const [subscribeNotifications, {  data: subscribeNotificationData, error: subscribeNotificationsError }] = subscribeNotificationsMutation;
 
   const handleSubmit = async () => {
-    await subscribeNotifications({ variables: { email, dAppUuid,selectedNotifications } });
+    subscribeNotifications({
+      variables: { email, dAppUuid, selectedNotifications }
+    });
   }
     
   const isSelected = (notification) => {
     const index = selectedNotifications.indexOf(notification.uuid);
     const result = index > -1 ? true : false;
     return result;
-  }
-
-  if(subscribeNotificationData){
-    // TO FIX: issues on rerender
-    // dispatch(updateEmail(""));
-    // dispatch(updateSelectedNotifications([]));
-    dispatch(openSnackbar({message:  "Succeeded. Check your Inbox for more details.",type:"success"}));
-    //reset reducer;
-    history.push("/");
   }
 
   if(subscribeNotificationsError){
