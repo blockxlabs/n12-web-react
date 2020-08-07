@@ -58,15 +58,15 @@ export default function ManageSubscriptions() {
   // error message
   if (error) {
     const message = error.message;
-    return <ErrorMessage message={message} />; 
+    return <ErrorMessage message={message} />;
   }
 
   // No Active Subscription
   if (Object.keys(data.getUserSubscriptions).length === 0) {
     const message = "No Active Subscription";
     dispatch(openSnackbar({ message, type: "error" }));
-    return <ErrorMessage message={message} />; 
-  } 
+    return <ErrorMessage message={message} />;
+  }
 
   const dApps = {};
   const email = data.getUserSubscriptions[0].User.email;
@@ -76,7 +76,7 @@ export default function ManageSubscriptions() {
         dApp: item.DApp,
         notifications: []
       }
-    } 
+    }
     checkedNotifications[item.Notification.uuid] = false;
     dApps[item.dAppUuid].notifications.push(item.Notification);
   });
@@ -116,10 +116,10 @@ export default function ManageSubscriptions() {
 
                 return dApp.notifications.map(notification => (
                   <Grid item xs={12} key={notification.uuid}>
-                    <LabeledSwitch 
-                    title={`${dApp.dApp.name} ${notification.name}`} 
-                    value={notification.uuid} 
-                    onChange={onChange}
+                    <LabeledSwitch
+                      title={`${dApp.dApp.name} ${notification.name}`}
+                      value={notification.uuid}
+                      onChange={onChange}
                     />
                     <ExpansionPanel>
                       <ExpansionPanelSummary
@@ -137,7 +137,7 @@ export default function ManageSubscriptions() {
                     </ExpansionPanel>
                   </Grid>
                 ))
-            
+
               })
             }
             <Grid item xs={12} >
