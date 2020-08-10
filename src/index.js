@@ -2,6 +2,10 @@ import React from 'react';
 import ReactDOM from 'react-dom';
 import './index.css';
 import App from './components/app/App';
+import { theme } from './components/app/App.theme';
+
+import { ThemeProvider } from '@material-ui/styles'; 
+import { CssBaseline } from '@material-ui/core';
 
 // uncomment to add Redux
 import store from './reducers/';
@@ -20,7 +24,10 @@ ReactDOM.render(
     <Provider store={store}>
       {/* // uncomment for apollo client   */}
       <ApolloProvider client={client}>
-        <App />
+        <ThemeProvider theme={theme}>
+          <CssBaseline/>
+          <App />
+        </ThemeProvider>
       </ApolloProvider>
     {/* // uncomment to add Redux  */}
     </Provider>
