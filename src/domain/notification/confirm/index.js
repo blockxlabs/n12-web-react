@@ -10,6 +10,7 @@ import { useQuery ,useMutation } from '@apollo/client';
 import { SELECTED_DAPP } from '../../../graphql/queries/getDapps';
 import { SUBSCRIBE_NOTIFICATIONS } from '../../../graphql/mutations/subscribeNotifications';
 import { openSnackbar } from '../../../components/snackbar/snackbar.slice';
+import CardView from '../../../components/cardView';
 
 export default function Confirm() {
   const classes = useStyles();
@@ -48,7 +49,7 @@ export default function Confirm() {
   }
 
   return (
-    <div> 
+    <CardView> 
       {
         data ?
         <Grid
@@ -109,6 +110,6 @@ export default function Confirm() {
         </Grid>
         : console.log(error)      
       }
-    </div>
+    </CardView>
   );
 }

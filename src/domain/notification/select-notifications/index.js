@@ -10,6 +10,7 @@ import { updateSelectedDapp,updateSelectedNotifications } from '../notification.
 import { useHistory } from "react-router-dom";
 import { useParams } from 'react-router-dom';
 import { openSnackbar } from '../../../components/snackbar/snackbar.slice';
+import CardView from '../../../components/cardView';
 
 export default function SelectNotifications() {
   const classes = useStyles();
@@ -40,7 +41,7 @@ export default function SelectNotifications() {
   }
     
   return (
-    <div> 
+    <CardView> 
       {
         data ?
         <Grid
@@ -96,6 +97,6 @@ export default function SelectNotifications() {
         </Grid>
         : console.log(error)      
       }
-    </div>
+    </CardView>
   );
 }

@@ -5,6 +5,7 @@ import { useDispatch,useSelector } from "react-redux";
 import { updateEmail } from '.././notification.slice';
 import { useHistory } from "react-router-dom";
 import { Notification } from "../notification.slice";
+import CardView from '../../../components/cardView';
 
 export default function Email() {
   const classes = useStyles();
@@ -31,34 +32,34 @@ export default function Email() {
     setEmail('');        
     }
     return (
-        <div className={classes.emailContainer} >
-        <Container component="main"  maxWidth="xs">
-            <CssBaseline />
-            <form className={classes.form} noValidate>
-                <Typography gutterBottom variant="h5" component="h2">
-                 Where would you like to receive the notifications?
+      <CardView>
+        <Container component="main" maxWidth="xs" className={classes.emailContainer}>
+          <CssBaseline />
+          <form className={classes.form} noValidate>
+            <Typography gutterBottom variant="h5" component="h2">
+              Where would you like to receive the notifications?
                 </Typography>
-               <TextField
-                    type="email"
-                    error={isEmailError}
-                    helperText={isEmailError ?'Invalid Email.':''}
-                    variant="outlined"
-                    margin="normal"
-                    required
-                    fullWidth
-                    id="email"
-                    label="Email Address"
-                    name="email"
-                    autoComplete="email"
-                    autoFocus
-                    value={emailText}
-                    onChange={(e)=>setEmail(e.target.value)}
-                />
-                <Button variant="contained" color="primary" onClick ={handleNext}>
-                        Next
-                </Button>
-            </form>
+            <TextField
+              type="email"
+              error={isEmailError}
+              helperText={isEmailError ? 'Invalid Email.' : ''}
+              variant="outlined"
+              margin="normal"
+              required
+              fullWidth
+              id="email"
+              label="Email Address"
+              name="email"
+              autoComplete="email"
+              autoFocus
+              value={emailText}
+              onChange={(e) => setEmail(e.target.value)}
+            />
+            <Button variant="contained" color="primary" onClick={handleNext} >
+              Next
+            </Button>
+          </form>
         </Container>
-        </div>
+      </CardView>
     );
 }
