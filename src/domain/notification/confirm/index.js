@@ -38,15 +38,13 @@ export default function Confirm() {
     });
   }
     
-  const isSelected = (notification) => {
-    const index = selectedNotifications.indexOf(notification.uuid);
-    const result = index > -1 ? true : false;
-    return result;
-  }
-
   if(subscribeNotificationsError){
     dispatch(openSnackbar({ message: "Failed. Please try again.", type: "error" }));
   }
+
+  const displayNotifications = data ? data.dApps.Notifications.filter(item => {
+    return (selectedNotifications.indexOf(item.uuid) > -1);
+  }) : [];
 
   return (
     <CardView> 
@@ -77,9 +75,9 @@ export default function Confirm() {
               {email}
             </Typography> 
           </Grid>
-            {data.dApps.Notifications ? data.dApps.Notifications.map( notification => (
+            {(displayNotifications && displayNotifications.length) ? displayNotifications.map( notification => (
               <Grid item xs={12} key={notification.uuid}>
-                  <LabeledSwitch title={notification.name} disabled={true} checked={isSelected(notification)}  value={notification.uuid} />
+                <LabeledSwitch title={notification.name} checkedSwitch={true} />
                 <ExpansionPanel>
                   <ExpansionPanelSummary
                     expandIcon={<ExpandMoreIcon />}
