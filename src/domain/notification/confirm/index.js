@@ -49,7 +49,7 @@ export default function Confirm(props) {
           </Grid>
           {props.displayNotifications && props.displayNotifications.length ? (
             props.displayNotifications.map((notification) => (
-              <Grid item xs={12} key={notification.uuid}>
+              <Grid item xs={12} key={notification.uuid} className={classes.notificationDetail}>
                 <LabeledSwitch title={notification.name} checkedSwitch={true} />
                 <ExpansionPanel>
                   <ExpansionPanelSummary
