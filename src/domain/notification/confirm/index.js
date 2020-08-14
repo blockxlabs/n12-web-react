@@ -76,8 +76,8 @@ export default function Confirm() {
             </Typography> 
           </Grid>
             {(displayNotifications && displayNotifications.length) ? displayNotifications.map( notification => (
-              <Grid item xs={12} key={notification.uuid}>
-                <LabeledSwitch title={notification.name} checkedSwitch={true} />
+              <Grid item xs={12} key={notification.uuid} className={classes.notificationDetail}>
+                <LabeledSwitch title={notification.name} checkedSwitch={true}/>
                 <ExpansionPanel>
                   <ExpansionPanelSummary
                     expandIcon={<ExpandMoreIcon />}

@@ -65,7 +65,7 @@ export default function SelectNotifications() {
             </Typography> 
           </Grid>
             {data.dApps.Notifications ? data.dApps.Notifications.map( notification => (
-              <Grid item xs={12} key={notification.uuid}>
+              <Grid item xs={12} key={notification.uuid} className={classes.notificationDetail}>
                 <LabeledSwitch title={notification.name} onChange={handleChecked} value={notification.uuid} />
                 <ExpansionPanel>
                   <ExpansionPanelSummary

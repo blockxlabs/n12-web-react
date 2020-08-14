@@ -15,6 +15,9 @@ const useStyles = makeStyles((theme) => ({
     display: 'flex',
     justifyContent: 'center',
     marginTop: 100
+  },
+  notificationDetail: {
+    width: 'inherit'
   }
 }));
 
