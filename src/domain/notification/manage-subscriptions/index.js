@@ -116,7 +116,7 @@ export default function ManageSubscriptions() {
               Object.values(dApps).map(dApp => {
 
                 return dApp.notifications.map(notification => (
-                  <Grid item xs={12} key={notification.uuid}>
+                  <Grid item xs={12} key={notification.uuid} className={classes.notificationDetail}>
                     <LabeledSwitch
                       title={`${dApp.dApp.name} ${notification.name}`}
                       value={notification.uuid}

@@ -1,29 +1,27 @@
-import React from 'react';
-import { useQuery } from '@apollo/client';
-import { useHistory } from 'react-router-dom';
-import Card from '@material-ui/core/Card';
-import CardActionArea from '@material-ui/core/CardActionArea';
-import CardContent from '@material-ui/core/CardContent';
-import CardMedia from '@material-ui/core/CardMedia';
-import Typography from '@material-ui/core/Typography';
-import CircularProgress from '@material-ui/core/CircularProgress';
-import Grid from '@material-ui/core/Grid';
-import useStyles from './styles';
-import { ALL_DAPPS } from '../../../graphql/queries/getDapps'
-import ErrorMessage from '../../../components/error-message';
+import React from "react";
+import { useQuery } from "@apollo/client";
+import { useHistory } from "react-router-dom";
+import Card from "@material-ui/core/Card";
+import CardActionArea from "@material-ui/core/CardActionArea";
+import CardContent from "@material-ui/core/CardContent";
+import CardMedia from "@material-ui/core/CardMedia";
+import Typography from "@material-ui/core/Typography";
+import CircularProgress from "@material-ui/core/CircularProgress";
+import Grid from "@material-ui/core/Grid";
+import useStyles from "./styles";
+import { ALL_DAPPS } from "../../../graphql/queries/getDapps";
+import ErrorMessage from "../../../components/error-message";
 
 function Dapps() {
-
   const classes = useStyles();
   const history = useHistory();
   const { loading, error, data } = useQuery(ALL_DAPPS);
 
   const viewDetail = (dapp) => {
-    history.push("/select-notifications/" + dapp.uuid);
+    history.push("/subscription-wizard/" + dapp.uuid);
   };
 
   const renderEachDapp = (dapp) => {
-
     return (
       <Grid item xs={6} sm={4} key={dapp.uuid}>
         <Card>
@@ -49,35 +47,44 @@ function Dapps() {
 
   if (error) {
     const message = error.message;
-    return (
-      <ErrorMessage message={message} />
-    );
+    return <ErrorMessage message={message} />;
   }
 
   if (loading) {
-    return <div className={classes.loadingWrapper} ><CircularProgress /></div>;
+    return (
+      <div className={classes.loadingWrapper}>
+        <CircularProgress />
+      </div>
+    );
   }
 
   return (
     <div>
       <div className={classes.titleWrapper}>
-        <Typography variant='h3' gutterBottom={true}> All DApps </Typography>
-        <Typography variant='h4' gutterBottom={true}>to stay in the know of the blockchain systems</Typography>
+        <Typography variant="h3" gutterBottom={true}>
+          {" "}
+          All DApps{" "}
+        </Typography>
+        <Typography variant="h4" gutterBottom={true}>
+          to stay in the know of the blockchain systems
+        </Typography>
       </div>
 
-      {loading && <div className={classes.loadingWrapper} ><CircularProgress /></div>}
-      
-      {
-        data && <Grid container spacing={3}>
-          {
-            data.allDApps.map(dapp => {
-              return renderEachDapp(dapp);
-            })
-          }
+      {loading && (
+        <div className={classes.loadingWrapper}>
+          <CircularProgress />
+        </div>
+      )}
+
+      {data && (
+        <Grid container spacing={3}>
+          {data.allDApps.map((dapp) => {
+            return renderEachDapp(dapp);
+          })}
         </Grid>
-      }
+      )}
     </div>
-  )
+  );
 }
 
-export default Dapps; 
+export default Dapps;
