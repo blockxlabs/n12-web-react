@@ -24,7 +24,7 @@ function Dapps() {
   const renderEachDapp = (dapp) => {
     return (
       <Grid item xs={6} sm={4} key={dapp.uuid}>
-        <Card>
+        <Card className={classes.cardWrapper}>
           <CardActionArea onClick={() => viewDetail(dapp)}>
             <CardMedia
               className={classes.cardLogo}

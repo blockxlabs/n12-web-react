@@ -41,7 +41,11 @@ export default function ManageSubscriptions() {
         subscriptionIds.push(item.uuid);
       }
     });
-    unSubscribeNotifications({ variables: { userNotifications: subscriptionIds } });
+    if (subscriptionIds.length) {
+      unSubscribeNotifications({ variables: { userNotifications: subscriptionIds } });
+    } else {
+      dispatch(openSnackbar({ message: "Please select at least one subscription", type: "error" }));
+    }
   };
 
   const onChange = (event) => {

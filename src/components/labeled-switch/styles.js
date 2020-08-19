@@ -1,4 +1,5 @@
 import { makeStyles } from '@material-ui/core/styles';
+import { green } from '@material-ui/core/colors';
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -10,6 +11,10 @@ const useStyles = makeStyles((theme) => ({
   },
   label: {
     marginRight: 'auto'
+  },
+  checked: {
+    color: green[500],
+    minHeight: 38
   }
 }));
 
