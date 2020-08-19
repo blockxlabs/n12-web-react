@@ -9,12 +9,12 @@ const useStyles = makeStyles((theme) => ({
     paddingLeft: 16,
     paddingRight: 16
   },
-  label: {
-    marginRight: 'auto'
-  },
   checked: {
     color: green[500],
     minHeight: 38
+  },
+  controlRoot :{
+    marginLeft: 'auto'
   }
 }));
 

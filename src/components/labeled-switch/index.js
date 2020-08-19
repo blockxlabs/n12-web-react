@@ -11,14 +11,25 @@ export default function LabeledSwitch(props) {
         checked={props.checked}
         value={props.value}
         control={
-          props.checkedSwitch ? <CheckCircleIcon className={classes.checked} /> :
-            <Switch edge='end' inputProps={{ 'data-testid': `testId${props.value}` }} disabled={props.disabled} value={props.value} onChange={e => props.onChange(e)} color="primary" />
+          props.checkedSwitch ? 
+          <CheckCircleIcon className={classes.checked} classes={{
+            root: classes.controlRoot,
+          }}/> :
+          <Switch 
+            edge='end' inputProps={{ 'data-testid': `testId${props.value}` }} 
+            disabled={props.disabled} 
+            value={props.value} 
+            onChange={e => props.onChange(e)} 
+            color="primary" 
+            classes={{
+              root: classes.controlRoot,
+            }}
+          />
         }
         label={props.title}
         labelPlacement="start"
         classes={{
           root: classes.root,
-          label: classes.label
         }}
       />
     </div>
