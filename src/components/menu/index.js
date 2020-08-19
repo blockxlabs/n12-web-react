@@ -91,10 +91,7 @@ const PrimaryMenuAppBar = (props) => {
           onClick={handleProfileMenuOpen}
           color="inherit"
         >
-          <AccountCircle />
         </IconButton>
-        {renderMobileMenu}
-        {renderMenu}
       </div>
 
       <div className={classes.sectionMobile}>
@@ -105,7 +102,6 @@ const PrimaryMenuAppBar = (props) => {
           onClick={handleMobileMenuOpen}
           color="inherit"
         >
-          <MoreIcon />
         </IconButton>
       </div>
     </Fragment>
