@@ -28,7 +28,7 @@ export default function ManageSubscriptions() {
       dispatch(openSnackbar({ message: "Succeeded. Notification Unsubscribed.", type: "success" }));
       history.push('/');
     },
-    onError() {
+    onError(e) {
       dispatch(openSnackbar({ message: "Unable to complete the request please try again", type: "error" }));
     }
   });
@@ -56,7 +56,6 @@ export default function ManageSubscriptions() {
   if (loading) {
     return <div className={classes.loadingWrapper} ><CircularProgress /></div>;
   }
-
 
   // error message
   if (error) {
@@ -97,14 +96,6 @@ export default function ManageSubscriptions() {
             justify="flex-end"
             alignItems="center"
           >
-            {/* <Grid item xs={12} >
-              <Avatar alt={data.dApps.name} src={data.dApps.logoUrl} className={classes.large} />
-            </Grid> */}
-            {/* <Grid item xs={12} >
-              <Typography gutterBottom variant="h5" component="h5">
-                {data.dApps.name}
-              </Typography>
-            </Grid> */}
             <Grid item xs={12} className={classes.headerWraper}>
               <Typography variant="body2" color="textSecondary" component="p">
                 Please select the notifications to unsubscribe
