@@ -11,7 +11,7 @@ export default function LabeledSwitch(props) {
         value={props.value}
         control={
           props.checkedSwitch ? <Switch edge='end' checked color="primary" /> :
-            <Switch edge='end' disabled={props.disabled} value={props.value} onChange={e => props.onChange(e)} color="primary" />
+            <Switch edge='end' inputProps={{ 'data-testid': `testId${props.value}` }} disabled={props.disabled} value={props.value} onChange={e => props.onChange(e)} color="primary" />
         }
         label={props.title}
         labelPlacement="start"
