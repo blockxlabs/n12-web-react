@@ -1,5 +1,5 @@
 import React from "react";
-import { SELECTED_DAPP } from "../../../graphql/queries/getDapps";
+import Pagination from '@material-ui/lab/Pagination';
 import { useQuery } from "@apollo/client";
 import {
   Typography,
@@ -8,23 +8,56 @@ import {
   ExpansionPanel,
   ExpansionPanelSummary,
   ExpansionPanelDetails,
+  CircularProgress
 } from "@material-ui/core";
 import ExpandMoreIcon from "@material-ui/icons/ExpandMore";
 import LabeledSwitch from "../../../components/labeled-switch";
 import useStyles from "./styles";
 import { useParams } from "react-router-dom";
 import CardView from "../../../components/cardView";
+import ErrorMessage from '../../../components/error-message';
+import { GET_NOTIFICATIONS_BY_DAPP } from "../../../graphql/queries/getNotifications";
 
-export default function SelectNotifications(props) {
+const queryLimit = 5;
+
+export default function SelectNotifications(props) { 
   const classes = useStyles();
   const { dAppUuid } = useParams();
-  const { error, data } = useQuery(SELECTED_DAPP, {
-    variables: { dAppUuid },
+  const { error, data, loading, fetchMore } = useQuery(GET_NOTIFICATIONS_BY_DAPP, {
+    variables: { 
+      dAppUuid,
+      offset: 0,
+      limit: queryLimit
+    },
   });
+
+  // error message
+  if (error) {
+    const message = error.message;
+    return <ErrorMessage message={message} />;
+  }
+
+  // loading data
+  if (loading) {
+    return <div className={classes.loadingWrapper} ><CircularProgress /></div>;
+  }
+
+  const { notifications, totalCount, dApp } = data.notifcationsByDApp;
+  
+  async function onPageChange(event, page) {
+    fetchMore({
+      variables: {
+        offset: queryLimit * (page - 1)
+      },
+      updateQuery: (prev, { fetchMoreResult }) => {
+        return fetchMoreResult;
+      }
+    })
+  }
 
   return (
     <CardView>
-      {data ? (
+      {notifications ? (
         <Grid
           container
           spacing={2}
@@ -34,23 +67,24 @@ export default function SelectNotifications(props) {
         >
           <Grid item xs={12}>
             <Avatar
-              alt={data.dApps.name}
-              src={data.dApps.logoUrl}
+              alt={dApp.name}
+              src={dApp.logoUrl}
               className={classes.large}
             />
           </Grid>
           <Grid item xs={12}>
             <Typography gutterBottom variant="h5" component="h5">
-              {data.dApps.name}
+              {dApp.name}
             </Typography>
           </Grid>
           <Grid item xs={12}>
             <Typography variant="body2" color="textSecondary" component="p">
-              {data.dApps.description}
+              {dApp.description}
             </Typography>
           </Grid>
-          {data.dApps.Notifications ? (
-            data.dApps.Notifications.map((notification) => (
+          
+          {notifications ? (
+            notifications.map((notification) => (
               <Grid item xs={12} key={notification.uuid} className={classes.notificationDetail}>
                 <LabeledSwitch
                   title={notification.name}
@@ -80,6 +114,19 @@ export default function SelectNotifications(props) {
               </Typography>
             </Grid>
           )}
+
+          {
+            totalCount &&
+            <Pagination
+              count={Math.ceil(totalCount / queryLimit)}
+              color="primary"
+              onChange={onPageChange}
+              classes={{
+                ul: classes.paginationBar
+              }}
+            />
+          }
+
         </Grid>
       ) : (
         console.log(error)

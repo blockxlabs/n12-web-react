@@ -7,6 +7,16 @@ const useStyles = makeStyles((theme) => ({
   },
   notificationDetail: {
     width: 'inherit'
+  },
+  paginationBar: {
+    justifyContent: 'center',
+    marginTop: 10
+  },
+  loadingWrapper: {
+    display: 'flex',
+    justifyContent: 'center',
+    marginTop: 100,
+    marginBottom: 100
   }
 }));
 
