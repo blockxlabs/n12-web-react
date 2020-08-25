@@ -42,7 +42,7 @@ export default function SelectNotifications(props) {
     return <div className={classes.loadingWrapper} ><CircularProgress /></div>;
   }
 
-  const { notifications, totalCount, dApp } = data.notifcationsByDApp;
+  const { notifications, totalCount, dApp } = data.notificationsByDApp;
   
   async function onPageChange(event, page) {
     fetchMore({
@@ -90,6 +90,7 @@ export default function SelectNotifications(props) {
                   title={notification.name}
                   onChange={props.handleChecked}
                   value={notification.uuid}
+                  checked={props.checkedNotifications[notification.uuid]}
                 />
                 <ExpansionPanel>
                   <ExpansionPanelSummary
