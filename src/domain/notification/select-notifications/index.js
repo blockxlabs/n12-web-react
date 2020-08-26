@@ -21,12 +21,12 @@ import SearchBar from "../../../components/search-bar";
 
 const queryLimit = 5;
 
-export default function SelectNotifications(props) { 
+export default function SelectNotifications(props) {
   const classes = useStyles();
   const { dAppUuid } = useParams();
   const [currentPage, setCurrentPage] = useState(1);
   const { error, data, loading, fetchMore, refetch } = useQuery(GET_NOTIFICATIONS_BY_DAPP, {
-    variables: { 
+    variables: {
       dAppUuid,
       offset: 0,
       limit: queryLimit
@@ -46,7 +46,7 @@ export default function SelectNotifications(props) {
   }
 
   const { notifications, totalCount, dApp } = data.notificationsByDApp;
-  
+
   async function onPageChange(event, page) {
     setCurrentPage(page);
     fetchMore({
@@ -125,30 +125,30 @@ export default function SelectNotifications(props) {
               </Grid>
             ))
           ) : (
-            <Grid item xs={12}>
-              <Typography variant="body" color="textSecondary" component="p">
-                No notifications
+              <Grid item xs={12}>
+                <Typography variant="body" color="textSecondary" component="p">
+                  No notifications
               </Typography>
-            </Grid>
-          )}
+              </Grid>
+            )}
 
           {
             (totalCount && totalCount > 0) ?
-            <Pagination
-              page={currentPage}
-              count={Math.ceil(totalCount / queryLimit)}
-              color="primary"
-              onChange={onPageChange}
-              classes={{
-                ul: classes.paginationBar
-              }}
-            /> : null
+              <Pagination
+                page={currentPage}
+                count={Math.ceil(totalCount / queryLimit)}
+                color="primary"
+                onChange={onPageChange}
+                classes={{
+                  ul: classes.paginationBar
+                }}
+              /> : null
           }
 
         </Grid>
       ) : (
-        console.log(error)
-      )}
+          console.log(error)
+        )}
     </CardView>
   );
 }
