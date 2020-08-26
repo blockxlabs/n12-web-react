@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState } from "react";
 import Pagination from '@material-ui/lab/Pagination';
 import { useQuery } from "@apollo/client";
 import {
@@ -17,18 +17,21 @@ import { useParams } from "react-router-dom";
 import CardView from "../../../components/cardView";
 import ErrorMessage from '../../../components/error-message';
 import { GET_NOTIFICATIONS_BY_DAPP } from "../../../graphql/queries/getNotifications";
+import SearchBar from "../../../components/search-bar";
 
 const queryLimit = 5;
 
 export default function SelectNotifications(props) { 
   const classes = useStyles();
   const { dAppUuid } = useParams();
-  const { error, data, loading, fetchMore } = useQuery(GET_NOTIFICATIONS_BY_DAPP, {
+  const [currentPage, setCurrentPage] = useState(1);
+  const { error, data, loading, fetchMore, refetch } = useQuery(GET_NOTIFICATIONS_BY_DAPP, {
     variables: { 
       dAppUuid,
       offset: 0,
       limit: queryLimit
     },
+    fetchPolicy: "cache-and-network"
   });
 
   // error message
@@ -45,6 +48,7 @@ export default function SelectNotifications(props) {
   const { notifications, totalCount, dApp } = data.notificationsByDApp;
   
   async function onPageChange(event, page) {
+    setCurrentPage(page);
     fetchMore({
       variables: {
         offset: queryLimit * (page - 1)
@@ -53,6 +57,16 @@ export default function SelectNotifications(props) {
         return fetchMoreResult;
       }
     })
+  }
+
+  async function onSearch(searchQuery) {
+    setCurrentPage(1);
+    refetch({
+      dAppUuid,
+      searchQuery,
+      offset: 0,
+      limit: queryLimit
+    });
   }
 
   return (
@@ -82,8 +96,10 @@ export default function SelectNotifications(props) {
               {dApp.description}
             </Typography>
           </Grid>
-          
-          {notifications ? (
+          <Grid item xs={12}>
+            <SearchBar placeHolder={'Notification Name'} onSearch={onSearch} />
+          </Grid>
+          {(notifications && notifications.length > 0) ? (
             notifications.map((notification) => (
               <Grid item xs={12} key={notification.uuid} className={classes.notificationDetail}>
                 <LabeledSwitch
@@ -117,15 +133,16 @@ export default function SelectNotifications(props) {
           )}
 
           {
-            totalCount &&
+            (totalCount && totalCount > 0) ?
             <Pagination
+              page={currentPage}
               count={Math.ceil(totalCount / queryLimit)}
               color="primary"
               onChange={onPageChange}
               classes={{
                 ul: classes.paginationBar
               }}
-            />
+            /> : null
           }
 
         </Grid>
