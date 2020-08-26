@@ -49,7 +49,7 @@ export default function HorizontalLinearStepper() {
   const [activeStep, setActiveStep] = React.useState(0);
   const steps = getSteps();
   const { dAppUuid } = useParams();
-  const checkedNotifications = [];
+  const [checkedNotifications, updateCheckedNotifications] = useState({});
   const dispatch = useDispatch();
   const { email, selectedNotifications /*selectedDapp*/ } = useSelector(
     Notification
@@ -63,11 +63,14 @@ export default function HorizontalLinearStepper() {
   let history = useHistory();
 
   const handleEventsChecked = (event) => {
-    if (event.target.checked) {
-      checkedNotifications.push(event.target.value);
+    const newState = { ...checkedNotifications };
+    if (newState[event.target.value]) {
+      delete newState[event.target.value];
     } else {
-      checkedNotifications.pop(event.target.value);
+      newState[event.target.value] = true;
     }
+    updateCheckedNotifications(newState);
+
   };
 
   const subscribeNotificationsMutation = useMutation(SUBSCRIBE_NOTIFICATIONS, {
@@ -110,9 +113,9 @@ export default function HorizontalLinearStepper() {
     e.preventDefault();
     switch (activeStep) {
       case 0:
-        if (checkedNotifications.length > 0) {
+        if (Object.keys(checkedNotifications).length > 0) {
           dispatch(updateSelectedDapp(dAppUuid));
-          dispatch(updateSelectedNotifications(checkedNotifications));
+          dispatch(updateSelectedNotifications(Object.keys(checkedNotifications)));
           setActiveStep((prevActiveStep) => prevActiveStep + 1);
         } else {
           dispatch(
@@ -158,7 +161,7 @@ export default function HorizontalLinearStepper() {
   function getStepContent(step) {
     switch (step) {
       case 0:
-        return <SelectNotification handleChecked={handleEventsChecked} />;
+        return <SelectNotification handleChecked={handleEventsChecked} checkedNotifications={checkedNotifications} />;
       case 1:
         return (
           <Email

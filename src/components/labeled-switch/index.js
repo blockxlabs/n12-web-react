@@ -16,10 +16,11 @@ export default function LabeledSwitch(props) {
             root: classes.controlRoot,
           }}/> :
           <Switch 
-            edge='end' inputProps={{ 'data-testid': `testId${props.value}` }} 
+            edge='end' 
+            inputProps={{ 'data-testid': `testId${props.value}` }} 
             disabled={props.disabled} 
             value={props.value} 
-            onChange={e => props.onChange(e)} 
+            onChange={e => props.onChange(e)}
             color="primary" 
             classes={{
               root: classes.controlRoot,
