@@ -16,22 +16,23 @@ import useStyles from "./styles";
 import { useParams } from "react-router-dom";
 import CardView from "../../../components/cardView";
 import ErrorMessage from '../../../components/error-message';
-import { GET_NOTIFICATIONS_BY_DAPP } from "../../../graphql/queries/getNotifications";
+import { SELECTED_DAPP } from "../../../graphql/queries/getDapps";
 import SearchBar from "../../../components/search-bar";
 
-const queryLimit = 5;
+const eachPage = 5;
 
 export default function SelectNotifications(props) {
   const classes = useStyles();
   const { dAppUuid } = useParams();
   const [currentPage, setCurrentPage] = useState(1);
-  const { error, data, loading, fetchMore, refetch } = useQuery(GET_NOTIFICATIONS_BY_DAPP, {
+  const [filteredNotifications, setFiteredNotifications] = useState([]);
+  const { error, data, loading } = useQuery(SELECTED_DAPP, {
     variables: {
-      dAppUuid,
-      offset: 0,
-      limit: queryLimit
+      dAppUuid
     },
-    fetchPolicy: "cache-and-network"
+    onCompleted: (result) => {
+      setFiteredNotifications(result.dApps.Notifications);
+    }
   });
 
   // error message
@@ -45,33 +46,60 @@ export default function SelectNotifications(props) {
     return <div className={classes.loadingWrapper} ><CircularProgress /></div>;
   }
 
-  const { notifications, totalCount, dApp } = data.notificationsByDApp;
-
   async function onPageChange(event, page) {
     setCurrentPage(page);
-    fetchMore({
-      variables: {
-        offset: queryLimit * (page - 1)
-      },
-      updateQuery: (prev, { fetchMoreResult }) => {
-        return fetchMoreResult;
-      }
-    })
   }
 
   async function onSearch(searchQuery) {
-    setCurrentPage(1);
-    refetch({
-      dAppUuid,
-      searchQuery,
-      offset: 0,
-      limit: queryLimit
+    const result = data.dApps.Notifications.filter(noti => {
+      return (noti.name.match(new RegExp(searchQuery, 'i')));
     });
+    setFiteredNotifications(result);
+    setCurrentPage(1);
+  }
+
+  function renderNotifications() {
+    const offset = (currentPage - 1) * eachPage;
+    const notifications = filteredNotifications.slice(offset, offset + eachPage);
+    if (notifications && notifications.length > 0) {
+      return notifications.map((notification) => (
+        <Grid item xs={12} key={notification.uuid} className={classes.notificationDetail}>
+          <LabeledSwitch
+            title={notification.name}
+            onChange={props.handleChecked}
+            value={notification.uuid}
+            checked={props.checkedNotifications[notification.uuid]}
+          />
+          <ExpansionPanel>
+            <ExpansionPanelSummary
+              expandIcon={<ExpandMoreIcon />}
+              aria-controls="panel1a-content"
+              id="panel1a-header"
+            >
+              <Typography className={classes.heading}>
+                {notification.shortDescription}
+              </Typography>
+            </ExpansionPanelSummary>
+            <ExpansionPanelDetails>
+              <Typography>{notification.longDescription}</Typography>
+            </ExpansionPanelDetails>
+          </ExpansionPanel>
+        </Grid>
+      ))
+    } else {
+      return (
+        <Grid item xs={12}>
+          <Typography variant="body" color="textSecondary" component="p">
+            No notifications
+              </Typography>
+        </Grid>
+      );
+    }
   }
 
   return (
     <CardView>
-      {notifications ? (
+      {data ? (
         <Grid
           container
           spacing={2}
@@ -81,62 +109,33 @@ export default function SelectNotifications(props) {
         >
           <Grid item xs={12}>
             <Avatar
-              alt={dApp.name}
-              src={dApp.logoUrl}
+              alt={data.dApps.name}
+              src={data.dApps.logoUrl}
               className={classes.large}
             />
           </Grid>
           <Grid item xs={12}>
             <Typography gutterBottom variant="h5" component="h5">
-              {dApp.name}
+              {data.dApps.name}
             </Typography>
           </Grid>
           <Grid item xs={12}>
             <Typography variant="body2" color="textSecondary" component="p">
-              {dApp.description}
+              {data.dApps.description}
             </Typography>
           </Grid>
           <Grid item xs={12}>
             <SearchBar placeHolder={'Notification Name'} onSearch={onSearch} />
           </Grid>
-          {(notifications && notifications.length > 0) ? (
-            notifications.map((notification) => (
-              <Grid item xs={12} key={notification.uuid} className={classes.notificationDetail}>
-                <LabeledSwitch
-                  title={notification.name}
-                  onChange={props.handleChecked}
-                  value={notification.uuid}
-                  checked={props.checkedNotifications[notification.uuid]}
-                />
-                <ExpansionPanel>
-                  <ExpansionPanelSummary
-                    expandIcon={<ExpandMoreIcon />}
-                    aria-controls="panel1a-content"
-                    id="panel1a-header"
-                  >
-                    <Typography className={classes.heading}>
-                      {notification.shortDescription}
-                    </Typography>
-                  </ExpansionPanelSummary>
-                  <ExpansionPanelDetails>
-                    <Typography>{notification.longDescription}</Typography>
-                  </ExpansionPanelDetails>
-                </ExpansionPanel>
-              </Grid>
-            ))
-          ) : (
-              <Grid item xs={12}>
-                <Typography variant="body" color="textSecondary" component="p">
-                  No notifications
-              </Typography>
-              </Grid>
-            )}
+          {
+            renderNotifications()
+          }
 
           {
-            (totalCount && totalCount > 0) ?
+            (filteredNotifications.length > 0) ?
               <Pagination
                 page={currentPage}
-                count={Math.ceil(totalCount / queryLimit)}
+                count={Math.ceil(filteredNotifications.length / eachPage)}
                 color="primary"
                 onChange={onPageChange}
                 classes={{
