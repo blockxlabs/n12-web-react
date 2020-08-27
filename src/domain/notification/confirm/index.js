@@ -3,9 +3,9 @@ import {
   Typography,
   Avatar,
   Grid,
-  ExpansionPanel,
-  ExpansionPanelSummary,
-  ExpansionPanelDetails,
+  Accordion,
+  AccordionSummary,
+  AccordionDetails,
 } from "@material-ui/core";
 import ExpandMoreIcon from "@material-ui/icons/ExpandMore";
 import LabeledSwitch from "../../../components/labeled-switch";
@@ -51,8 +51,8 @@ export default function Confirm(props) {
             props.displayNotifications.map((notification) => (
               <Grid item xs={12} key={notification.uuid} className={classes.notificationDetail}>
                 <LabeledSwitch title={notification.name} checkedSwitch={true} />
-                <ExpansionPanel>
-                  <ExpansionPanelSummary
+                <Accordion>
+                  <AccordionSummary
                     expandIcon={<ExpandMoreIcon />}
                     aria-controls="panel1a-content"
                     id="panel1a-header"
@@ -60,16 +60,16 @@ export default function Confirm(props) {
                     <Typography className={classes.heading}>
                       {notification.shortDescription}
                     </Typography>
-                  </ExpansionPanelSummary>
-                  <ExpansionPanelDetails>
+                  </AccordionSummary>
+                  <AccordionDetails>
                     <Typography>{notification.longDescription}</Typography>
-                  </ExpansionPanelDetails>
-                </ExpansionPanel>
+                  </AccordionDetails>
+                </Accordion>
               </Grid>
             ))
           ) : (
             <Grid item xs={12}>
-              <Typography variant="body" color="textSecondary" component="p">
+              <Typography variant="body1" color="textSecondary" component="p">
                 No notifications
               </Typography>
             </Grid>

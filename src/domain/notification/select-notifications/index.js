@@ -5,9 +5,9 @@ import {
   Typography,
   Avatar,
   Grid,
-  ExpansionPanel,
-  ExpansionPanelSummary,
-  ExpansionPanelDetails,
+  Accordion, 
+  AccordionSummary, 
+  AccordionDetails,
   CircularProgress
 } from "@material-ui/core";
 import ExpandMoreIcon from "@material-ui/icons/ExpandMore";
@@ -68,10 +68,10 @@ export default function SelectNotifications(props) {
             title={notification.name}
             onChange={props.handleChecked}
             value={notification.uuid}
-            checked={props.checkedNotifications[notification.uuid]}
+            checked={props.checkedNotifications[notification.uuid] || false }
           />
-          <ExpansionPanel>
-            <ExpansionPanelSummary
+          <Accordion>
+            <AccordionSummary
               expandIcon={<ExpandMoreIcon />}
               aria-controls="panel1a-content"
               id="panel1a-header"
@@ -79,17 +79,17 @@ export default function SelectNotifications(props) {
               <Typography className={classes.heading}>
                 {notification.shortDescription}
               </Typography>
-            </ExpansionPanelSummary>
-            <ExpansionPanelDetails>
+            </AccordionSummary>
+            <AccordionDetails>
               <Typography>{notification.longDescription}</Typography>
-            </ExpansionPanelDetails>
-          </ExpansionPanel>
+            </AccordionDetails>
+          </Accordion>
         </Grid>
       ))
     } else {
       return (
         <Grid item xs={12}>
-          <Typography variant="body" color="textSecondary" component="p">
+          <Typography variant="body1" color="textSecondary" component="p">
             No notifications
               </Typography>
         </Grid>
