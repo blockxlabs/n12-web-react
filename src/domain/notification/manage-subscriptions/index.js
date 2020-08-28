@@ -1,6 +1,6 @@
 import React from 'react';
 import { useQuery, useMutation } from '@apollo/client';
-import { Typography, Button, Grid, ExpansionPanel, ExpansionPanelSummary, ExpansionPanelDetails, CircularProgress } from '@material-ui/core';
+import { Typography, Button, Grid, Accordion, AccordionSummary, AccordionDetails, CircularProgress } from '@material-ui/core';
 import ExpandMoreIcon from '@material-ui/icons/ExpandMore';
 import LabeledSwitch from '../../../components/labeled-switch';
 import useStyles from './styles';
@@ -117,20 +117,20 @@ export default function ManageSubscriptions() {
                       value={notification.uuid}
                       onChange={onChange}
                     />
-                    <ExpansionPanel>
-                      <ExpansionPanelSummary
+                    <Accordion>
+                      <AccordionSummary
                         expandIcon={<ExpandMoreIcon />}
                         aria-controls="panel1a-content"
                         id="panel1a-header"
                       >
                         <Typography className={classes.heading}>{notification.shortDescription}</Typography>
-                      </ExpansionPanelSummary>
-                      <ExpansionPanelDetails>
+                      </AccordionSummary>
+                      <AccordionDetails>
                         <Typography>
                           {notification.longDescription}
                         </Typography>
-                      </ExpansionPanelDetails>
-                    </ExpansionPanel>
+                      </AccordionDetails>
+                    </Accordion>
                   </Grid>
                 ))
 

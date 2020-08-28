@@ -7,11 +7,6 @@ query allDApps {
 		name
 	  description
     logoUrl
-    Notifications {
-      name
-      shortDescription
-      longDescription
-    }
   }
 }
 `;

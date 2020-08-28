@@ -210,9 +210,9 @@ export default function HorizontalLinearStepper() {
           </div>
         ) : (
           <div>
-            <Typography className={classes.instructions}>
+            <div className={classes.instructions}>
               {getStepContent(activeStep)}
-            </Typography>
+            </div>
             <div className={classes.buttonGroup}>
               <Button
                 disabled={activeStep === 0}

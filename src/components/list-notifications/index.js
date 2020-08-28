@@ -1,6 +1,6 @@
 
 import React from 'react';
-import { Typography, Grid, ExpansionPanelSummary, ExpansionPanelDetails, ExpansionPanel } from '@material-ui/core';
+import { Typography, Grid, Accordion, AccordionSummary, AccordionDetails } from '@material-ui/core';
 import ExpandMoreIcon from '@material-ui/icons/ExpandMore';
 import LabeledSwitch from '../labeled-switch';
 
@@ -22,20 +22,20 @@ export default function ListNotifications({ notifications }) {
               checked={notification.checked} 
               value={notification.uuid} 
             />
-            <ExpansionPanel>
-              <ExpansionPanelSummary
+            <Accordion>
+              <AccordionSummary
                 expandIcon={<ExpandMoreIcon />}
                 aria-controls="panel1a-content"
                 id="panel1a-header"
               >
                 <Typography >{notification.shortDescription}</Typography>
-              </ExpansionPanelSummary>
-              <ExpansionPanelDetails>
+              </AccordionSummary>
+              <AccordionDetails>
                 <Typography>
                   {notification.longDescription}
                 </Typography>
-              </ExpansionPanelDetails>
-            </ExpansionPanel>
+              </AccordionDetails>
+            </Accordion>
           </Grid>
         ))
       }

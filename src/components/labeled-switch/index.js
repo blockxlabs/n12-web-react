@@ -5,6 +5,7 @@ import useStyles from './styles';
 
 export default function LabeledSwitch(props) {
   const classes = useStyles();
+  
   return (
     <div key={props.value} width="100%">
       <FormControlLabel
