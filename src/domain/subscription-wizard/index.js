@@ -97,8 +97,8 @@ export default function HorizontalLinearStepper() {
     return result;
   };
 
-  const displayNotifications = (data && data.dApps && data.dApps.Notifications)
-    ? data.dApps.Notifications.filter((item) => {
+  const displayNotifications = (data && data.dApp && data.dApp.Notifications)
+    ? data.dApp.Notifications.filter((item) => {
         return selectedNotifications.indexOf(item.uuid) > -1;
       })
     : [];

@@ -31,7 +31,7 @@ export default function SelectNotifications(props) {
       dAppUuid
     },
     onCompleted: (result) => {
-      setFiteredNotifications(result.dApps.Notifications);
+      setFiteredNotifications(result.dApp.Notifications);
     }
   });
 
@@ -51,7 +51,7 @@ export default function SelectNotifications(props) {
   }
 
   async function onSearch(searchQuery) {
-    const result = data.dApps.Notifications.filter(noti => {
+    const result = data.dApp.Notifications.filter(noti => {
       return (noti.name.match(new RegExp(searchQuery, 'i')));
     });
     setFiteredNotifications(result);
@@ -109,19 +109,19 @@ export default function SelectNotifications(props) {
         >
           <Grid item xs={12}>
             <Avatar
-              alt={data.dApps.name}
-              src={data.dApps.logoUrl}
+              alt={data.dApp.name}
+              src={data.dApp.logoUrl}
               className={classes.large}
             />
           </Grid>
           <Grid item xs={12}>
             <Typography gutterBottom variant="h5" component="h5">
-              {data.dApps.name}
+              {data.dApp.name}
             </Typography>
           </Grid>
           <Grid item xs={12}>
             <Typography variant="body2" color="textSecondary" component="p">
-              {data.dApps.description}
+              {data.dApp.description}
             </Typography>
           </Grid>
           <Grid item xs={12}>
