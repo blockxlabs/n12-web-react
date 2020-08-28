@@ -5,8 +5,8 @@ import {
   Typography,
   Avatar,
   Grid,
-  Accordion, 
-  AccordionSummary, 
+  Accordion,
+  AccordionSummary,
   AccordionDetails,
   CircularProgress
 } from "@material-ui/core";
@@ -68,7 +68,7 @@ export default function SelectNotifications(props) {
             title={notification.name}
             onChange={props.handleChecked}
             value={notification.uuid}
-            checked={props.checkedNotifications[notification.uuid] || false }
+            checked={props.checkedNotifications[notification.uuid] || false}
           />
           <Accordion>
             <AccordionSummary
