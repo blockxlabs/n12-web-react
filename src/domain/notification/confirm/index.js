@@ -27,14 +27,14 @@ export default function Confirm(props) {
         >
           <Grid item xs={12}>
             <Avatar
-              alt={props.data.dApps.name}
-              src={props.data.dApps.logoUrl}
+              alt={props.data.dApp.name}
+              src={props.data.dApp.logoUrl}
               className={classes.large}
             />
           </Grid>
           <Grid item xs={12}>
             <Typography gutterBottom variant="h5" component="h5">
-              {props.data.dApps.name}
+              {props.data.dApp.name}
             </Typography>
           </Grid>
           <Grid item xs={12}>
